@@ -37,6 +37,10 @@ jobs:
         run: |
           source env/bin/activate
           pytest
+      - name: Execute python tests    
+        run: |
+          source env/bin/activate
+          pytest
           
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -45,5 +49,8 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
             aws-region: us-east-1
-      - name: List buckets
-        run: aws s3 ls
+            
+      - name: Deploy or update zappa    
+        run: |
+          source env/bin/activate
+          zappa deploy dev
